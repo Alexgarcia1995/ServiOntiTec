@@ -16,14 +16,14 @@ var app = angular.module('tutorialWebApp', [
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
     // Home
-    .when("/", {templateUrl: "partials/home.html", controller: "PageCtrl"})
+    .when("/", {templateUrl: "frontend/modules/home/view/home.html", controller: "PageCtrl"})
     // Pages
-    .when("/about", {templateUrl: "partials/about.html", controller: "PageCtrl"})
-    .when("/pricing", {templateUrl: "partials/pricing.html", controller: "PageCtrl"})
-    .when("/services", {templateUrl: "partials/services.html", controller: "PageCtrl"})
-    .when("/contact", {templateUrl: "partials/contact.html", controller: "PageCtrl"})
+    //.when("/about", {templateUrl: "view/about.html", controller: "PageCtrl"})
+   // .when("/pricing", {templateUrl: "view/pricing.html", controller: "PageCtrl"})
+    //.when("/services", {templateUrl: "view/services.html", controller: "PageCtrl"})
+    .when("/contact", {templateUrl: "frontend/modules/contact/view/contact.html", controller: "PageCtrl"})
     // else 404
-    .otherwise("/404", {templateUrl: "partials/404.html", controller: "PageCtrl"});
+    //.otherwise("/404", {templateUrl: "view/404.html", controller: "PageCtrl"});
 }]);
 
 /**

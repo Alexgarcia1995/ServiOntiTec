@@ -21,7 +21,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     //.when("/about", {templateUrl: "view/about.html", controller: "PageCtrl"})
    // .when("/pricing", {templateUrl: "view/pricing.html", controller: "PageCtrl"})
     //.when("/services", {templateUrl: "view/services.html", controller: "PageCtrl"})
-    .when("/contact", {templateUrl: "frontend/modules/contact/view/contact.html", controller: "PageCtrl"})
+    .when("/contact", {templateUrl: "frontend/modules/contact/view/contact.html", controller: "contactCtrl"})
     // else 404
     //.otherwise("/404", {templateUrl: "view/404.html", controller: "PageCtrl"});
 }]);

@@ -8,7 +8,7 @@
                 <small>We'd Love to Hear From You!</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="#/">Home</a></li>
                 <li class="active">Contact</li>
             </ol>
         </div>
@@ -32,29 +32,35 @@
                 voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
                 veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
 
-            <form role="form" method="POST" action="#">
+            <form id="contact_form" name="contact_form">
                 <div class="row">
                     <div class="form-group col-lg-4">
                         <label for="input1">Name</label>
-                        <input type="text" name="contact_name" class="form-control" id="input1">
+                        <input required ng-model="contact.inputName" type="text" id="inputName" name="inputName" placeholder="Name" class="form-control" dir="auto" maxlength="100">
+                        <span class="text-danger" ng-show="contact_form.inputName.$error.required && (contact_form.inputName.$dirty || contact_form.inputName.$touched)">El campo es obligatorio</span>
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="input2">Email Address</label>
-                        <input type="email" name="contact_email" class="form-control" id="input2">
+                        <input required ng-model="contact.inputEmail" type="email" id="inputEmail" name="inputEmail" placeholder="Email *" class="form-control" maxlength="100" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i">
+                        <span class="text-danger" ng-show="contact_form.inputEmail.$error.required && (contact_form.inputEmail.$dirty || contact_form.inputEmail.$touched)">El campo es obligatorio</span>
+                        <span class="text-danger" ng-show="contact_form.inputEmail.$error.email">Email no valido</span>
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="input3">Phone Number</label>
-                        <input type="phone" name="contact_phone" class="form-control" id="input3">
-                    </div>
+                        <input required ng-model="contact.inputPhone" type="text" id="inputPhone" name="inputPhone" placeholder="Phone number" class="form-control" dir="auto" maxlength="100">
+                        <span class="text-danger" ng-show="contact_form.inputPhone.$error.required && (contact_form.inputPhone.$dirty || contact_form.inputPhone.$touched)">El campo es obligatorio</span>
+                   </div>
                     <div class="clearfix"></div>
                     <div class="form-group col-lg-12">
                         <label for="input4">Message</label>
-                        <textarea name="contact_message" class="form-control" rows="6" id="input4"></textarea>
+                        <textarea required ng-model="contact.inputMessage" class="form-control" rows="4" id="inputMessage" name="inputMessage" placeholder="Introduzca aqui su mensaje *" style="max-width: 100%;" dir="auto"></textarea>
+                        <span class="text-danger" ng-show="contact_form.inputMessage.$error.required && (contact_form.inputMessage.$dirty || contact_form.inputMessage.$touched)">El campo es obligatorio</span>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <input type="hidden" name="save" value="contact">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                    <input class="btn btn-primary" type="submit" name="submit" id="submitBtn" value="Enviar" 
+                    ng-show="contact_form.inputName.$valid && contact_form.inputEmail.$valid && contact_form.inputMessage.$valid" 
+                    ng-click="SubmitContact()"/>
+             
+             <div id="resultMessage" ng-class="class">{{message}}</div>
                 </div>
             </form>
         </div>

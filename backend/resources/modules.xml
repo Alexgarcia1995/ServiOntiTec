@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modules>
+    <module>
+        <name>Home</name>
+        <uri>Home</uri>
+    </module>
+    <module>
+        <name>coche</name>
+        <uri>coche</uri>
+    </module>
+    <module>
+        <name>listcoches</name>
+        <uri>listcoches</uri>
+    </module>
+    <module>
+        <name>contact</name>
+        <uri>contact</uri>
+    </module>
+</modules>

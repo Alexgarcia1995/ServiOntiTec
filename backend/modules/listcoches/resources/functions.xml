@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+    <function>
+        <name>start_list</name>
+        <uri>start_list</uri>
+    </function>
+    <function>
+        <name>details_coches</name>
+        <uri>details_coches</uri>
+    </function>
+    <function>
+        <name>load_list</name>
+        <uri>load_list</uri>
+    </function>
+    <function>
+        <name>detailcoche</name>
+        <uri>detailcoche</uri>
+    </function>
+    <function>
+        <name>scroll</name>
+        <uri>scroll</uri>
+    </function>
+    <function>
+        <name>delete_coches</name>
+        <uri>delete_coches</uri>
+    </function>
+    <function>
+        <name>redirect_details</name>
+        <uri>redirect_details</uri>
+    </function>
+</functions>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+    <function>
+        <name>form_coches</name>
+        <uri>form_coches</uri>
+    </function>
+    <function>
+        <name>results_coches</name>
+        <uri>results_coches</uri>
+    </function>
+    <function>
+        <name>upload_coches</name>
+        <uri>upload_coches</uri>
+    </function>
+    <function>
+        <name>alta_coches</name>
+        <uri>alta_coches</uri>
+    </function>
+    <function>
+        <name>delete_coches</name>
+        <uri>delete_coches</uri>
+    </function>
+    <function>
+        <name>load_coches</name>
+        <uri>load_coches</uri>
+    </function>
+    <function>
+        <name>load_data_coches</name>
+        <uri>load_data_coches</uri>
+    </function>
+    <function>
+        <name>load_countries_coches</name>
+        <uri>load_countries_coches</uri>
+    </function>
+    <function>
+        <name>load_provinces_coches</name>
+        <uri>load_provinces_coches</uri>
+    </function>
+    <function>
+        <name>load_towns_coches</name>
+        <uri>load_towns_coches</uri>
+    </function>
+</functions>

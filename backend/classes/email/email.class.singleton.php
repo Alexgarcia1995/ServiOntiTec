@@ -97,9 +97,9 @@
            // $config['api_key'] = "key-0d32063a19d690be82da3bfeb69a9e3b"; //API Key
             $config['api_key'] = "key-f8dfbcd3eced9cf4b65aea488565d3f9"; //API Key
         //	$config['api_url'] = "https://api.mailgun.net/v2/sandbox1811da627e3e450ebabe2e836ed20a3a.mailgun.org/messages"; //API Base URL
-            $config['api_url'] = "https://api.mailgun.net/v3/sandboxd346fc405668438d8be9cc8ef4c8018e.mailgun.org"; //API Base URL
+            $config['api_url'] = "https://api.mailgun.net/v3/sandboxd346fc405668438d8be9cc8ef4c8018e.mailgun.org/messages"; //API Base URL
         	$message = array();
-        	$message['from'] = "jordiet450@gmail.com";
+        	$message['from'] = "jordiet450@gmail.com";//ruralshoponti@gmail.com
         	$message['to'] = $email;
         	$message['h:Reply-To'] = "jordiet450@gmail.com";
         	$message['subject'] = "Hello, this is a test";

@@ -52,7 +52,7 @@ function handlerModule($URI_module, $URI_function) {
                 $obj = new $controllerClass;
                 //die($obj.'-objetos');
             } else {
-                alert($path . ' - Controlador 1 no encontrado'. $URI_function);
+                die($path . ' - Controlador 1 no encontrado'. $URI_function);
                 require_once(VIEW_PATH_INC . "header.php");
                 require_once(VIEW_PATH_INC . "menu.php");
                 showErrorPage(1, "", 'HTTP/1.0 400 Bad Request', 400);

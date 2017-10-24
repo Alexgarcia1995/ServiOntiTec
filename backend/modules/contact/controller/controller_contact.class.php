@@ -9,8 +9,8 @@
         
         public function process_contact() {
 
-            if($_POST['token'] === "contact_form"){
-                
+       //     if($_POST['token'] === "contact_form"){
+                echo ([$_POST]);
                 //////////////// Envio del correo al usuario
                 $arrArgument = array(
 									'type' => 'contact',
@@ -22,7 +22,7 @@
 								);
 				//set_error_handler('ErrorHandler');
 				try{
-					alert("Hola");
+					echo("Hola");
                     echo "<div class='alert alert-success'>".enviar_email($arrArgument)." </div>";
 				} catch (Exception $e) {
 					echo "<div class='alert alert-error'> Try later...</div>";
@@ -47,9 +47,10 @@
 					echo "<div class='alert alert-error'>Server error. Try later...</div>";
 				}
 			//	restore_error_handler();
-				
+			/*	
             }else{
                 echo "<div class='alert alert-error'>Server error. Try later...</div>";
-            }
+			}
+			*/
         }
     }

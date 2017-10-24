@@ -1,10 +1,10 @@
 <?php
 //SITE_ROOT
-$path = $_SERVER['DOCUMENT_ROOT'] . '/Servidor_2DAW/ServiOntiTec/backend/';
+$path = $_SERVER['DOCUMENT_ROOT'] . '/ServiOntiTec/backend/';
 define('SITE_ROOT', $path);
 
 //SITE_PATH
-define('SITE_PATH', 'http://' . $_SERVER['HTTP_HOST'] . '/Servidor_2DAW/ServiOntiTec/backend/');
+define('SITE_PATH', 'http://' . $_SERVER['HTTP_HOST'] . '/ServiOntiTec/backend/');
 
 //CSS
 define('CSS_PATH', SITE_PATH . 'view/assets/css/');

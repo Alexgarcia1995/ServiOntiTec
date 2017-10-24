@@ -1,5 +1,5 @@
 app.factory("services", ['$http','$q', function ($http, $q) {
-    var serviceBase = '/Servidor_2DAW/ServiOntiTec/backend/index.php?module=';
+    var serviceBase = 'backend/index.php?module=';
     var obj = {};
         
         obj.get = function (module, functi) {
@@ -94,3 +94,14 @@ app.factory("services", ['$http','$q', function ($http, $q) {
         };
     return obj;
 }]);
+function amigable(url) {
+    var link = "";
+    url = url.replace("?", "");
+    url = url.split("&");
+
+    for (var i = 0; i < url.length; i++) {
+        var aux = url[i].split("=");
+        link += aux[1] + "/";
+    }
+    return link;
+}

@@ -1,6 +1,5 @@
 <?php
     function enviar_email($arr) {
-        alert($arr);
         $html = '';
         $subject = '';
         $body = '';

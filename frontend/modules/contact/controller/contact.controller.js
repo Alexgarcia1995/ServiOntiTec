@@ -11,7 +11,8 @@ app.controller('contactCtrl', function ($scope, services) {
         var data = {"inputName": $scope.contact.inputName, 
         "inputEmail": $scope.contact.inputEmail, 
         "inputPhone": $scope.contact.inputPhone, 
-        "inputMessage": $scope.contact.inputMessage,"token":'contact_form'};
+        "inputMessage": $scope.contact.inputMessage,
+        "token":'contact_form'};
         var contact_form = JSON.stringify(data);
         alert(contact_form);
         services.post('contact', 'process_contact', contact_form).then(function (response) {

@@ -24,8 +24,8 @@ class controller_listcoches{
     //////////////////////////////////////////////////////////////// load
     //if (isset($_GET["load_coches"]) && $_GET["load_coches"] == true) {
         $arrValue = loadModel(MODEL_LISTCOCHE, "coche_model", "list_coches");
+        
         echo json_encode($arrValue);
-       die("vacio");
         exit;
     //}
 }

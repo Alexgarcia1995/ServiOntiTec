@@ -1,40 +1,4 @@
-
-
 app.controller('listadoCtrl', function ($scope, services) {
-function load_coches() {
-   services.get('listcoches', 'load_list').then(function (data) {
-        json = JSON.parse(data);
-        i=0;
-        limit=1;
-        //console.log(data);
-        pintar_coche(json,limit);
-        //alert( "success" );
-    }).done(function () {
-        //alert( "second success" );
-    }).fail(function () {
-        //alert( "error" );
-    }).always(function () {
-        //alert( "finished" );
-    });
-}
-function scroll() {
-   services.get('listcoches', 'scroll').then(function (data) {
-        var datos = JSON.parse(data);
-        limit+=datos.valor;
-        alert(limit);
-        //console.log(json);
-        pintar_coche(json,limit);
-        //alert( "success" );
-    }).done(function () {
-        //alert( "second success" );
-    }).fail(function () {
-        //alert( "error" );
-    }).always(function () {
-        //alert( "finished" );
-    });
-  
-}
-$(document).ready(function () {
     var json;
     var limit;
     var i;
@@ -45,7 +9,44 @@ $(document).ready(function () {
         scroll();
        }
     });
-});
+
+function load_coches() {
+   services.get('listcoches', 'load_list').then(function (data) {
+        alert(data);
+        //console.log(data);
+        //debugger;
+        json=data;
+        i=0;
+        limit=1;
+        //console.log(data);
+        pintar_coche(json,limit);
+    });
+}
+function scroll() {
+   services.get('listcoches', 'scroll').then(function (data) {
+        //var datos = JSON.parse(data);
+        limit+=data.valor;
+        alert(limit);
+        //console.log(json);
+        pintar_coche(json,limit);
+        //alert( "success" );
+    });
+  
+}
+
+
+// $(document).ready(function () {
+//     var json;
+//     var limit;
+//     var i;
+//     load_coches();
+//     $(window).scroll(function(){
+//       if($(window).scrollTop() + $(window).height()+2 >= $(document).height()){
+//         //alert("Hola");
+//         scroll();
+//        }
+//     });
+// });
 
 function pintar_coche(data, limit) {
     var content = document.getElementById("data");

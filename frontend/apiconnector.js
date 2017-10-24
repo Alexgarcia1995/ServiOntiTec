@@ -32,14 +32,13 @@ app.factory("services", ['$http','$q', function ($http, $q) {
         };
         
         obj.get = function (module, functi, dada, dada2) {
-            alert(dada);
+            //alert(dada);
             var defered=$q.defer();
             var promise=defered.promise;
             $http({
                   method: 'GET',
                   url: serviceBase + module + '&function=' + functi + '&aux=' + dada + '&param2=' + dada2
               }).success(function(data, status, headers, config) {
-                 console.log(data);
                  defered.resolve(data);
               }).error(function(data, status, headers, config) {
                  defered.reject(data);

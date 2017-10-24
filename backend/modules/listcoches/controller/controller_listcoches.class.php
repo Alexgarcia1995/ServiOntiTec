@@ -6,6 +6,7 @@ class controller_listcoches{
             include(UTILS . "upload.php");
             $_SESSION['module'] = "listcoches";
         }
+        /*
         function start_list(){
             require_once(VIEW_PATH_INC . "header.php");
             require_once(VIEW_PATH_INC . "menu.php");
@@ -18,11 +19,13 @@ class controller_listcoches{
             loadView('modules/listcoches/view/', 'details_coches.php');
             require_once(VIEW_PATH_INC . "footer.php");
         }
+        */
     function load_list(){
     //////////////////////////////////////////////////////////////// load
     //if (isset($_GET["load_coches"]) && $_GET["load_coches"] == true) {
         $arrValue = loadModel(MODEL_LISTCOCHE, "coche_model", "list_coches");
         echo json_encode($arrValue);
+       die("vacio");
         exit;
     //}
 }

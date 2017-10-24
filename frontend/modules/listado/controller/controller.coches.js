@@ -1,5 +1,8 @@
+
+
+app.controller('listadoCtrl', function ($scope, services) {
 function load_coches() {
-    var jqxhr = $.get("../../listcoches/load_list", function (data) {
+   services.get('listcoches', 'load_list').then(function (data) {
         json = JSON.parse(data);
         i=0;
         limit=1;
@@ -13,13 +16,10 @@ function load_coches() {
     }).always(function () {
         //alert( "finished" );
     });
-    jqxhr.always(function () {
-        //alert( "second finished" );
-    });
 }
 function scroll() {
-    var jqxhr = $.get("../../listcoches/scroll", function (data) {
-        var datos = JSON.parse(data)
+   services.get('listcoches', 'scroll').then(function (data) {
+        var datos = JSON.parse(data);
         limit+=datos.valor;
         alert(limit);
         //console.log(json);
@@ -32,9 +32,7 @@ function scroll() {
     }).always(function () {
         //alert( "finished" );
     });
-    jqxhr.always(function () {
-        //alert( "second finished" );
-    });
+  
 }
 $(document).ready(function () {
     var json;
@@ -113,17 +111,18 @@ function pintar_coche(data, limit) {
         function View_More(button,identificador){
           button.addEventListener("click",function(){
             var pretty_list_articles = pretty("?module=listcoches&function=redirect_details&aux="+identificador);
-            $.get(pretty_list_articles,
-            function (data, status) {
+            services.get(pretty_list_articles).then(function (data, status) {
+           // $.get(pretty_list_articles,
+            //function (data, status) {
             console.log(data);
             var myResponse = JSON.parse(data);
             console.log(myResponse);
             window.location.href = myResponse.redirect;
-            })
+            });
           });
         } 
     }
-
+});
     function pretty(url) {
         var pretty_url="";
         url = url.replace("?", "");
@@ -132,7 +131,8 @@ function pintar_coche(data, limit) {
         var aux = url[i].split("=");
         pretty_url += "/"+aux[1];
         }
-        var SITEROOT = "http://localhost/Servidor_2DAW/Exercici_Framework/"
+        var SITEROOT = "http://localhost/ServiOntiTec/"
         var long_url = SITEROOT + pretty_url;
         return long_url;
         }
+

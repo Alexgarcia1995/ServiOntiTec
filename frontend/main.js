@@ -18,7 +18,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Home
     .when("/", {templateUrl: "frontend/modules/home/view/home.html", controller: "PageCtrl"})
     // Pages
-    //.when("/about", {templateUrl: "view/about.html", controller: "PageCtrl"})
+    .when("/listado", {templateUrl: "frontend/modules/listado/view/list_coches.html", controller: "listadoCtrl"})
    // .when("/pricing", {templateUrl: "view/pricing.html", controller: "PageCtrl"})
     //.when("/services", {templateUrl: "view/services.html", controller: "PageCtrl"})
     .when("/contact", {templateUrl: "frontend/modules/contact/view/contact.html", controller: "contactCtrl"})
@@ -31,6 +31,10 @@ app.config(['$routeProvider', function ($routeProvider) {
  */
 app.controller('BlogCtrl', function (/* $scope, $location, $http */) {
   console.log("Blog Controller reporting for duty.");
+});
+
+app.controller('listadoCtrl', function (/* $scope, $location, $http */) {
+  console.log("listado Controller reporting for duty.");
 });
 
 /**

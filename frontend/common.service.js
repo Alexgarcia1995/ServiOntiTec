@@ -2,6 +2,7 @@ app.factory("CommonService", ['$rootScope','$timeout', function ($rootScope, $ti
         var service = {};
         service.banner = banner;
         service.amigable = amigable;
+        service.pretty = pretty;
         return service;
 
         function banner(message, type) {
@@ -26,4 +27,20 @@ app.factory("CommonService", ['$rootScope','$timeout', function ($rootScope, $ti
             }
             return link;
         }
+
+        function pretty(url) {
+            alert(url);
+            var pretty_url="";
+            url = url.replace("?", "");
+            url = url.split("&");
+            for(var i=0; i<url.length;i++){
+            var aux = url[i].split("=");
+            pretty_url += "/"+aux[1];
+            }
+            var SITEROOT = "http://localhost/ServiOntiTec"
+            alert(pretty_url);
+            var long_url = SITEROOT + pretty_url;
+            return long_url;
+            }
+    
     }]);

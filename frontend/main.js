@@ -22,6 +22,17 @@ app.config(['$routeProvider', function ($routeProvider) {
    // .when("/pricing", {templateUrl: "view/pricing.html", controller: "PageCtrl"})
     //.when("/services", {templateUrl: "view/services.html", controller: "PageCtrl"})
     .when("/contact", {templateUrl: "frontend/modules/contact/view/contact.html", controller: "contactCtrl"})
+    .when("/listado&id=:id", {
+      templateUrl: "frontend/modules/listado/view/details_coches.html",
+      controller: "detailsCtrl",
+      resolve: {
+          data: function (services, $route,CommonService) {
+            //var pretty_list_articles = "?module=&function=redirect_details&aux="+;
+            //alert(pretty_list_articles);
+            return services.get("listcoches","redirect_details",$route.current.params.id);
+      }
+    }
+  })
     // else 404
     //.otherwise("/404", {templateUrl: "view/404.html", controller: "PageCtrl"});
 }]);

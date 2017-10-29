@@ -2,31 +2,59 @@ app.controller('listadoCtrl', function ($scope, services,CommonService) {
     var json;
     var limit;
     var i;
-    load_coches();
+    let valor="";
+    load_coches(valor);
     $(window).scroll(function(){
       if($(window).scrollTop() + $(window).height()+2 >= $(document).height()){
         //alert("Hola");
         scroll();
        }
     });
+    $scope.buscar = function() {
+      let vista= document.getElementById("data");
+      while (vista.firstChild) {
+        vista.removeChild(vista.firstChild);
+      }
+      valor=$scope.filtro;
+      load_coches(valor);
+      $(window).scroll(function(){
+        if($(window).scrollTop() + $(window).height()+2 >= $(document).height()){
+          //alert("Hola");
+          scroll();
+         }
+      });
+    }
 
-function load_coches() {
+function load_coches(filtro) {
    services.get('listcoches', 'load_list').then(function (data) {
-        alert(data);
-        //console.log(data);
-        //debugger;
+        if(filtro===""){
         json=data;
         i=0;
         limit=1;
         //console.log(data);
         pintar_coche(json,limit);
+        }
+        else{
+          let datos=[];
+          for (i; i < data.length;i++) {
+            if(data[i].Tipo===filtro){
+              datos.push(data[i]);
+            }
+          }
+          json=datos;
+          i=0;
+          limit=1;
+          //console.log(data);
+          pintar_coche(json,limit);
+        }
+        
     });
 }
 function scroll() {
    services.get('listcoches', 'scroll').then(function (data) {
         //var datos = JSON.parse(data);
         limit+=data.valor;
-        alert(limit);
+        //alert(limit);
         //console.log(json);
         pintar_coche(json,limit);
         //alert( "success" );
@@ -75,25 +103,25 @@ function pintar_coche(data, limit) {
       content.appendChild(div_user);
     }
     else {
-      alert("i="+ i);
       var final=limit;
       if (final>limites) {
         final=limites
       }
-      for (i; i < final;i++) {
-              console.log(i);
-              var dat = document.createElement("div");
-              var button=document.createElement("button");
-              var view=document.createTextNode("Mas info");
-              button.appendChild(view);
-              button.setAttribute(src,"#/");
-              var Matricula=data[i].Matricula;
-              var Tipo=data[i].Tipo;
-              var Marca=data[i].marca;
-              //console.log(valor);
-              dat.innerHTML = avatar(data[i].avatar) + " " + Matricula +" "+Tipo+" "+Marca + "<br>";
-              //View_More(button,Matricula);
-              parrafo.appendChild(dat).appendChild(button);
+      for (i; i < final;i++) { 
+        console.log(i);
+        var dat = document.createElement("div");
+        var button=document.createElement("button");
+        var view=document.createTextNode("Mas info");
+        var a=document.createElement("a");            
+        var Matricula=data[i].Matricula;
+        var Tipo=data[i].Tipo;
+        var Marca=data[i].marca;
+        a.href = "#/listado&id="+Matricula;
+        button.appendChild(view);
+        a.appendChild(button); 
+        dat.innerHTML = avatar(data[i].avatar) + " " + Matricula +" "+Tipo+" "+Marca + "<br>";
+        //View_More(button,Matricula);
+        parrafo.appendChild(dat).appendChild(a);
       }
 
     div_user.appendChild(parrafo);
@@ -112,19 +140,19 @@ function pintar_coche(data, limit) {
               return html;
             }
         }
-        function View_More(button,identificador){
-          button.addEventListener("click",function(){
-            var pretty_list_articles = CommonService.pretty("?module=listcoches&function=redirect_details&aux="+identificador);
-            services.get(pretty_list_articles).then(function (data, status) {
-           // $.get(pretty_list_articles,
-            //function (data, status) {
-            console.log(data);
-            //var myResponse = JSON.parse(data);
-            console.log(myResponse);
-            window.location.href = myResponse.redirect;
-            });
-          });
-        } 
+        // function View_More(button,identificador){
+        //   button.addEventListener("click",function(){
+        //     var pretty_list_articles = CommonService.pretty("?module=listcoches&function=redirect_details&aux="+identificador);
+        //     services.get(pretty_list_articles).then(function (data, status) {
+        //    // $.get(pretty_list_articles,
+        //     //function (data, status) {
+        //     console.log(data);
+        //     //var myResponse = JSON.parse(data);
+        //     console.log(myResponse);
+        //     window.location.href = myResponse.redirect;
+        //     });
+        //   });
+        // } 
     }
 });
 
@@ -155,7 +183,7 @@ app.controller('detailsCtrl', function ($scope,data,services,ofertas_map) {
             var direccion=data.data[0].Direccion_Asistida;
             //console.log(valor);
             button.addEventListener("click",function(){
-              window.location.href="../../listcoches/start_list";
+              window.location.href="#/listado";
             });
             dat.innerHTML = avatar2(data.data[0].avatar) + "<br> Matricula:" + Matricula +"<br> Tipo:"+Tipo+"<br> Marca:"+Marca
             + "<br> Fecha compra:" + Fecha + "<br> Potencia:" + Potencia + "<br> Combustible:" + Combustible + "<br> Kilometraje:" + Kilometraje

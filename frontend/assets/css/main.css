@@ -222,6 +222,111 @@ footer {
 }
 */
 /* Responsive Styles */
+
+/* Icon */
+
+.icon {
+    text-decoration: none;
+    border-bottom: none;
+    position: relative;
+}
+
+.icon:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important;
+}
+
+.icon:active, .icon:hover {
+    text-decoration: none;
+}
+
+.icon > .label {
+    display: none;
+}
+
+.icon.rounded {
+    background-color: #061C33;
+    border-radius: 100%;
+    color: #ffffff;
+    display: inline-block;
+    height: 3.25em;
+    line-height: 3.25em;
+    text-align: center;
+    width: 3.25em;
+}
+
+.icon.rounded.big {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.icon.rounded.color1 {
+    background-color: #3cadd4;
+}
+
+.icon.rounded.color2 {
+    background-color: #3c61d4;
+}
+
+.icon.rounded.color3 {
+    background-color: #633cd4;
+}
+
+.icon.rounded.color4 {
+    background-color: #af3cd4;
+}
+
+.icon.rounded.color5 {
+    background-color: #d43cad;
+}
+
+.icon.rounded.color6 {
+    background-color: #d43c61;
+}
+
+.icon.rounded.color7 {
+    background-color: #d4633c;
+}
+
+.icon.rounded.color8 {
+    background-color: #d4af3c;
+}
+
+.icon.rounded.color9 {
+    background-color: #add43c;
+}
+
+.icon.rounded.color10 {
+    background-color: #61d43c;
+}
+
+.icon.rounded.fa-twitter {
+    background-color: #2daae4;
+}
+
+.icon.rounded.fa-facebook {
+    background-color: #39599f;
+}
+
+.icon.rounded.fa-google-plus {
+    background-color: #c91e1f;
+}
+
+.icon.rounded.fa-dribbble {
+    background-color: #c4376b;
+}
+
+.icon.rounded.fa-tumblr, .icon.rounded.fa-linkedin {
+    background-color: #31516a;
+}
+
+.icon.rounded.fa-rss {
+    background-color: #f2600b;
+}
 @media (max-width: 767px) {
 
   

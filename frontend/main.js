@@ -7,7 +7,7 @@
  * Main AngularJS Web Application
  */
 var app = angular.module('tutorialWebApp', [
-  'ngRoute'
+  'ngRoute', 'ngAnimate', 'ui.bootstrap', 'ngCookies', 'facebook'
 ]);
 
 /**
@@ -16,7 +16,7 @@ var app = angular.module('tutorialWebApp', [
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
     // Home
-    .when("/", {templateUrl: "frontend/modules/home/view/home.html", controller: "PageCtrl"})
+    .when("/", {templateUrl: "frontend/modules/home/view/home.html", controller: "menuCtrl"})
     // Pages
     .when("/listado", {templateUrl: "frontend/modules/listado/view/list_coches.html", controller: "listadoCtrl"})
     .when("/pricing", {templateUrl: "frontend/modules/pricing.html", controller: "PageCtrl"})

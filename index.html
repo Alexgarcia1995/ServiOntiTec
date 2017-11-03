@@ -17,10 +17,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Vendor: Bootstrap Stylesheets http://getbootstrap.com -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="frontend/modules/user/view/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
+    <link href="frontend/modules/contact/view/css/custom.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" />
     <!-- Our Website CSS Styles -->
     <link rel="stylesheet" href="frontend/assets/css/main.css">
 
@@ -41,11 +44,31 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <!-- Vendor: Angular, followed by our custom Javascripts -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-animate.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-cookies.min.js" ></script>
 
 <!-- Our Website Javascripts -->
 <script src="frontend/main.js"></script>
+<script src="frontend/modules/user/controller/user.controller.js"></script>
+<script src="frontend/modules/user/services/user.service.js"></script>
+<script src="frontend/modules/user/directives/user.directives.js"></script>
+<script src="frontend/modules/user/services/load_selects.services.js"></script>
+<script src="frontend/modules/user/services/cookies.services.js"></script>
+<script src="frontend/modules/user/services/localstorage.services.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css" />
+<script src="frontend/modules/user/libs/angular-facebook.js"></script>
+<script src="frontend/modules/user/services/social.services.js"></script>
+<script src="frontend/modules/user/libs/oauth.js"></script>
+
+<script src="frontend/modules/cookies/controller/cookies.controller.js"></script>
+<script src="frontend/modules/cookies/services/accept_cookies.services.js"></script>
+<script src="frontend/modules/cookies/services/localstorage_acceptcookies.services.js"></script>
 <script src="frontend/modules/contact/controller/contact.controller.js"></script>
 <script src="frontend/modules/listado/controller/controller.coches.js"></script>
 <script src="frontend/modules/listado/services/ofertas_map.services.js"></script>

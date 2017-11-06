@@ -65,3 +65,6 @@ define('CONTACT_IMG_PATH', SITE_PATH . 'modules/contact/view/img/');
 define('CONTACT_VIEW_PATH', SITE_PATH . 'modules/contact/view/');
 //amigables
 define('URL_AMIGABLES', TRUE);
+//model users
+define('UTILS_USER', SITE_ROOT . '/modules/user/utils/');
+define('MODEL_USER', SITE_ROOT . '/modules/user/model/model/');

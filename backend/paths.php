@@ -68,3 +68,5 @@ define('URL_AMIGABLES', TRUE);
 //model users
 define('UTILS_USER', SITE_ROOT . '/modules/user/utils/');
 define('MODEL_USER', SITE_ROOT . '/modules/user/model/model/');
+define('BLL_USER', SITE_ROOT . '/modules/user/model/bll/');
+define('DAO_USER', SITE_ROOT . '/modules/user/model/dao/');

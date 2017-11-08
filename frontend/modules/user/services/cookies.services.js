@@ -14,11 +14,11 @@ app.factory("cookiesService", ['$cookies', 'localstorageService',
             //encriptar data
             var usuario = Base64_encode(user.usuario);
             var tipo = Base64_encode(user.tipo);
-            var nombre = Base64_encode(user.nombre);
-            
+            var email= Base64_encode(user.email);
+            //var nombre = Base64_encode(user.nombre);
             //almacenarlos en la cookie session
             $cookies.putObject("session", 
-            {usuario: usuario, avatar: user.avatar, tipo: tipo, nombre: nombre}, 
+            {usuario: usuario, avatar: user.avatar, tipo: tipo, email:email}, 
             {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
             
             //almacenarlos en localstorage
@@ -51,15 +51,16 @@ app.factory("cookiesService", ['$cookies', 'localstorageService',
         function GetCredentials_encode(user) {
             var usuario = Base64_encode(user.usuario);
             var tipo = Base64_encode(user.tipo);
-            var nombre = Base64_encode(user.nombre);
-            return {usuario: usuario, avatar: user.avatar, tipo: tipo, nombre: nombre};
+            var email= Base64_encode(user.email);
+            //var nombre = Base64_encode(user.nombre);
+            return {usuario: usuario, avatar: user.avatar, tipo: tipo,email:email};
         }
         
         function GetCredentials_decode() {
             var usuario = Base64_decode($cookies.getObject("session").usuario);
             var tipo = Base64_decode($cookies.getObject("session").tipo);
-            var nombre = Base64_decode($cookies.getObject("session").nombre);
-            return {usuario: usuario, avatar: $cookies.getObject("session").avatar, tipo: tipo, nombre: nombre};
+            var email= Base64_decode($cookies.getObject("session").email);
+            return {usuario: usuario, avatar: $cookies.getObject("session").avatar, tipo: tipo,email:email};
         }
         
         function Base64_encode(input) {

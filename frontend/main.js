@@ -33,6 +33,29 @@ app.config(['$routeProvider', function ($routeProvider) {
       }
     }
   })
+  .when("/user/alta/", {
+    templateUrl: "frontend/modules/user/view/signup.view.html",
+    controller: "signupCtrl"
+    })
+
+  .when("/user/activar/:token", {
+      templateUrl: "frontend/modules/home/view/home.html",
+      controller: "verifyCtrl"
+  })
+
+  .when("/user/profile/", {
+    templateUrl: "frontend/modules/user/view/profile.view.html",
+    controller: "profileCtrl",
+    resolve: {
+        user: function (services, cookiesService) {
+            var user = cookiesService.GetCredentials();
+            if (user) {
+                return services.get('user', 'profile_filler', user.usuario);
+            }
+            return false;
+        }
+    }
+})
     // else 404
     //.otherwise("/404", {templateUrl: "view/404.html", controller: "PageCtrl"});
 }]);

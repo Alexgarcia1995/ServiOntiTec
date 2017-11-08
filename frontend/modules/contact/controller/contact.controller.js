@@ -1,5 +1,4 @@
 app.controller('contactCtrl', function ($scope, services) {
-    console.log($scope);
     $scope.contact = {
         inputName: "",
         inputEmail: "",
@@ -14,9 +13,8 @@ app.controller('contactCtrl', function ($scope, services) {
         "inputMessage": $scope.contact.inputMessage,
         "token":'contact_form'};
         var contact_form = JSON.stringify(data);
-        alert(contact_form);
-        services.post('contact', 'process_contact', contact_form).then(function (response) {
-            alert(response);
+        services.get('contact', 'process_contact', contact_form).then(function (response) {
+            console.log(response);
             response = response.split("|");
             $scope.message = response[1];
             if (response[0].substring(1,5) == 'true') {

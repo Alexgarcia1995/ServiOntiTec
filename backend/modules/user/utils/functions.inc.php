@@ -3,16 +3,16 @@ function validate_userPHP($value) {
     $filtro = array(
         'usuario' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
-            'options' => array('regexp' => '/^.{4,20}$/')
+            'options' => array('regexp' => '/^[A-Za-z]{3,30}$/')
         ),
-        'nombre' => array(
+        /*'nombre' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^\D{3,30}$/')
         ),
         'apellidos' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^\D{4,120}$/')
-        ),
+        ),*/
         'email' => array(
             'filter' => FILTER_CALLBACK,
             'options' => 'validatemail'
@@ -20,7 +20,7 @@ function validate_userPHP($value) {
         'password' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^.{6,12}$/')
-        ),
+        ),/*
         'date_birthday' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/\d{2}.\d{2}.\d{4}$/')
@@ -28,12 +28,11 @@ function validate_userPHP($value) {
         'bank' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^.{4,20}$/')
-        )
+        )*/
     );
 
     $resultado = filter_var_array($value, $filtro);
     $resultado['password2'] = $value['password2'];
-    $resultado['dni'] = $value['dni'];
     $resultado['tipo'] = $value['tipo'];
     $resultado['avatar'] = $value['avatar'];
     $resultado['pais'] = $value['pais'];
@@ -48,14 +47,14 @@ function validateUsers($resultado) {
         $result['usuario'] = 'Usuario debe tener de 4 a 20 caracteres';
         $result['resultado'] = false;
         
-    } elseif (!$resultado['nombre']) {
+    /*} elseif (!$resultado['nombre']) {
         $result['nombre'] = 'Nombre debe tener de 3 a 30 letras';
         $result['resultado'] = false;
       
     } elseif (!$resultado['apellidos']) {
         $result['apellidos'] = 'Apellidos debe tener de 4 a 120 letras';
         $result['resultado'] = false;
-       
+       */
     } elseif (!$resultado['email']) {
         $result['email'] = 'El email debe contener de 5 a 50 caracteres y debe ser un email valido';
         $result['resultado'] = false;
@@ -64,7 +63,7 @@ function validateUsers($resultado) {
         $result['password'] = 'Password debe tener de 6 a 12 caracteres y las dos contrasenyas deben ser iguales';
         $result['resultado'] = false;
        
-    } elseif (!$resultado['date_birthday']) {
+    /*} elseif (!$resultado['date_birthday']) {
         $result['date_birthday'] = 'Formato fecha mm/dd/yy';
         $result['resultado'] = false;
       
@@ -79,7 +78,7 @@ function validateUsers($resultado) {
     } elseif (!validate_dni($resultado['dni'])) {
         $result['dni'] = 'DNI inválido';
         $result['resultado'] = false;
-       
+    */   
     } elseif (!preg_match('/^[a-zA-Z_]*$/', $resultado['pais']) && $resultado['pais'] !== " ") {
         $result['pais'] = 'pais introducido no válido';
         $result['resultado'] = false;
@@ -152,7 +151,7 @@ function sendtoken($arrArgument, $type) {
     );
     set_error_handler('ErrorHandler');
     try {
-        enviar_email($mail);
+        send_mailgun($mail);
         return true;
     } catch (Exception $e) {
         return false;

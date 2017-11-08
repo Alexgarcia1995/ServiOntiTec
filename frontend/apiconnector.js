@@ -19,6 +19,7 @@ app.factory("services", ['$http','$q', function ($http, $q) {
         obj.get = function (module, functi, dada) {
             var defered=$q.defer();
             var promise=defered.promise;
+            //console.log(dada);
             $http({
                   method: 'GET',
                   url: serviceBase + module + '&function=' + functi + '&aux=' + dada
@@ -32,7 +33,7 @@ app.factory("services", ['$http','$q', function ($http, $q) {
         };
         
         obj.get = function (module, functi, dada, dada2) {
-            //alert(dada);
+            console.log(dada);
             var defered=$q.defer();
             var promise=defered.promise;
             $http({

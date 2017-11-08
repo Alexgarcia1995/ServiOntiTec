@@ -5,6 +5,8 @@ class user_bll {
     static $_instance;
 
     private function __construct() {
+        include(DAO_USER . "user_dao.class.singleton.php");
+        include(MODEL_PATH . "Db.class.singleton.php");
         $this->dao = user_dao::getInstance();
         $this->db = db::getInstance();
     }

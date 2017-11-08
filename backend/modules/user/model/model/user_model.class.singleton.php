@@ -4,6 +4,7 @@ class user_model {
     static $_instance;
 
     private function __construct() {
+        include(BLL_USER. "user_bll.class.singleton.php");
         $this->bll = user_bll::getInstance();
     }
 

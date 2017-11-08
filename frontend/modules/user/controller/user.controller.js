@@ -1,5 +1,4 @@
 app.controller('menuCtrl', function ($scope, $uibModal, UserService, $rootScope, $anchorScroll) {
-    alert("Hola");
     UserService.login();
     $rootScope.bannerV = false;
     $rootScope.bannerText = "";
@@ -41,10 +40,9 @@ app.controller('modalWindowCtrl', function ($scope, $uibModalInstance, services,
     $scope.login = function () {
         var data = {"usuario": $scope.form.user, "pass": $scope.form.pass};
         data = JSON.stringify(data);
-        
-        services.post("user", "login", data).then(function (response) {
+        services.get("user", "login", data).then(function (response) {
             //console.log(response);
-            //console.log(response[0].usuario);
+            console.log(response[0]);
             if (!response.error) {
                 cookiesService.SetCredentials(response[0]);
                 $scope.close();
@@ -118,37 +116,21 @@ app.controller('modalWindowCtrl', function ($scope, $uibModalInstance, services,
 app.controller('signupCtrl', function ($scope, services, $location, $timeout, CommonService) {
     $scope.signup = {
         inputUser: "",
-        inputName: "",
-        inputSurn: "",
-        inputEmail: "",
         inputPass: "",
         inputPass2: "",
-        inputBirth: "",
         inputType: "client",
-        inputBank: "",
-        inputDni: ""
     };
     
     $scope.error = function() {
         $scope.signup.user_error = ""; 
         $scope.signup.email_error = "";  
-        $scope.signup.nombre_error = ""; 
-        $scope.signup.surn_error = "";          
         $scope.signup.pass_error = "";
-        $scope.signup.birth_error = "";
-        $scope.signup.bank_error = "";
-        $scope.signup.dni_error = "";
     };
     
     $scope.change_signup = function () {
         $scope.signup.user_error = ""; 
         $scope.signup.email_error = "";  
-        $scope.signup.nombre_error = ""; 
-        $scope.signup.surn_error = "";          
         $scope.signup.pass_error = "";
-        $scope.signup.birth_error = "";
-        $scope.signup.bank_error = "";
-        $scope.signup.dni_error = "";
     };
     
     $('.modal').remove();
@@ -156,12 +138,13 @@ app.controller('signupCtrl', function ($scope, services, $location, $timeout, Co
     $("body").removeClass("modal-open");
 
     $scope.SubmitSignUp = function () {
-        var data = {"usuario": $scope.signup.inputUser, "nombre": $scope.signup.inputName, "apellidos": $scope.signup.inputSurn, "email": $scope.signup.inputEmail,
-            "password": $scope.signup.inputPass, "password2": $scope.signup.inputPass2, "date_birthday": $scope.signup.inputBirth, "tipo": $scope.signup.inputType,
-            "bank": $scope.signup.inputBank, "dni": $scope.signup.inputDni};
+        var data = {"usuario": $scope.signup.inputUser,"email": $scope.signup.inputEmail,
+            "password": $scope.signup.inputPass, "password2": $scope.signup.inputPass2, 
+            "tipo": $scope.signup.inputType
+            };
         var data_users_JSON = JSON.stringify(data);
-        services.post('user', 'signup_user', data_users_JSON).then(function (response) {
-            //console.log(response);
+        services.get('user', 'signup_user', data_users_JSON).then(function (response) {
+            console.log(response);
             if (response.success) {
                 $timeout(function () {
                     $location.path('/');
@@ -211,7 +194,7 @@ app.controller('verifyCtrl', function (UserService, $location, CommonService, $r
         $location.path('/');
     }
     services.get("user", "activar", token).then(function (response) {
-        //console.log(response);
+        console.log(response);
         //console.log(response.user[0].usuario);
         if (response.success) {
             CommonService.banner("Su cuenta ha sido satisfactoriamente verificada", "");
@@ -288,37 +271,37 @@ app.controller('changepassCtrl', function ($route, $scope, services, $location, 
 
 app.controller('profileCtrl', function ($scope, UserService, services, user, $location, CommonService, 
 load_pais_prov_poblac, $timeout, cookiesService) {
-    //console.log(user);
+    console.log(user);
     //console.log(user.user.usuario); //yomogan
-    
     //admin
     $scope.admin = false;
     var user_cookie = cookiesService.GetCredentials();
-    if (user_cookie) {
-        if( (user.user.usuario !== user_cookie.usuario) && (user_cookie.tipo != 'admin') )
-            $location.path("/");
-        else if (user.user.usuario !== user_cookie.usuario)
-            $scope.admin = true;
-    }else{
-        $location.path("/");
-    }
+    // if (user_cookie) {
+    //     if( (user.user.usuario !== user_cookie.usuario) && (user_cookie.tipo != 'admin') )
+    //         $location.path("/");
+    //     else if (user.user.usuario !== user_cookie.usuario)
+    //         $scope.admin = true;
+    // }else{
+    //     $location.path("/");
+    // }
                 
     //llenar los campos del form_profile con scope
-    user.user.password = "";
+    //user.user.password = "";
     $scope.user = user.user;
+    $scope.email= user.email;
     $scope.drop = {
         msgClass: ''
     };
-    if (!isNaN(user.user.usuario))
-        $scope.user.usuario = user.user.nombre;
+    // if (!isNaN(user.user.usuario))
+    //     $scope.user.usuario = user.user.nombre;
         
     //disabled mail y dni
-    $scope.controlmail = false; //ng-disabled=false
-    $scope.controldni = false; //ng-disabled=false
-    if (user.user.email)
-        $scope.controlmail = true;
-    if (user.user.dni)
-        $scope.controldni = true;
+    // $scope.controlmail = false; //ng-disabled=false
+    // $scope.controldni = false; //ng-disabled=false
+    // if (user.user.email)
+    //     $scope.controlmail = true;
+    // if (user.user.dni)
+    //     $scope.controldni = true;
     
     //errors
     $scope.error = function() {

@@ -1,72 +1,107 @@
 <?php
-    function enviar_email($arr) {
-        $html = '';
-        $subject = '';
-        $body = '';
-        $ruta = '';
-        $return = '';
-        
-        switch ($arr['type']) {
-            case 'alta':
-                $subject = 'Tu Alta en Rural_Shop';
-                $ruta = "<a href='" . amigable("?module=login&function=activar&aux=A" . $arr['token'], true) . "'>aqu&iacute;</a>";
-                $body = 'Gracias por unirte a nuestra aplicaci&oacute;n<br> Para finalizar el registro, pulsa ' . $ruta;
-                break;
+   function send_mailgun($arrArgument){
+    $config = array();
+    switch ($arrArgument['type']) {
+        case 'alta':
+            $subject = 'Tu Alta en FarmixShop';
+            $ruta = "<a href='http://".$_SERVER['HTTP_HOST']."/ServiOntiTec/#/user/activar/" . $arrArgument['token'] . "'>aqu&iacute;</a>";
+            $body = 'Gracias por unirte a nuestra aplicaci&oacute;n. Para finalizar el registro, pulsa ' . $ruta;
+            break;
     
-            case 'modificacion':
-                $subject = 'Tu Nuevo Password en Rural_Shop<br>';
-                $ruta = '<a href="' . amigable("?module=login&function=activar&aux=F" . $arr['token'], true) . '">aqu&iacute;</a>';
-                $body = 'Para recordar tu password pulsa ' . $ruta;
-                break;
-                
-            case 'contact':
-                $subject = 'Tu Petici&oacute;n a Rural_Shop ha sido enviada<br>';
-                $ruta = '<a href=' . 'https://php-mvc-oo-yomogan.c9.io/3_Framework/4_framework_contact/'. '>aqu&iacute;</a>';
-                $body = 'Para visitar nuestra web, pulsa ' . $ruta;
-                break;
+        case 'modificacion':
+            $subject = 'Tu Nuevo Password en FarmixShop';
+            $ruta = "<a href='http://".$_SERVER['HTTP_HOST']."/ServiOntiTec/#/user/cambiarpass/" . $arrArgument['token'] . "'>aqu&iacute;</a>";
+            $body = 'Para recordar tu password pulsa ' . $ruta;
+            break;
+        case 'contact':
+            $subject = 'Tu Petici&oacute;n a ServiOntiTec ha sido enviada<br>';
+            $ruta = '<a href="http://'.$_SERVER['HTTP_HOST'].'/ServiOntiTec/#/"' .'>aqu&iacute;</a>';
+            $body = $arrArgument['inputMessage'].'Para visitar nuestra web, pulsa ' . $ruta;
+            break;
     
-            case 'admin':
-                $subject = $arr['inputSubject'];
-                $body = 'inputName: ' . $arr['inputName']. '<br>' .
-                'inputEmail: ' . $arr['inputEmail']. '<br>' .
-                'inputSubject: ' . $arr['inputSubject']. '<br>' .
-                'inputMessage: ' . $arr['inputMessage'];
-                break;
-        }
-        
-        $html .= "<html>";
-        $html .= "<body>";
-	       $html .= "<h4>". $subject ."</h4>";
-	       $html .= $body;
-	       $html .= "<br><br>";
-	       $html .= "<p>Sent by RURAL_SHOP</p>";
-		$html .= "</body>";
-		$html .= "</html>";
-
-   //     set_error_handler('ErrorHandler');
-        require_once(EMAIL . "email.class.singleton.php");
-        try{
-          
-            $mail = email::getInstance();
-            $mail->name = $arr['inputName'];
-            if ($arr['type'] === 'admin')
-                $mail->address = 'ruralshoponti@gmail.com';
-            else
-                $mail->address = $arr['inputEmail'];
-            $mail->subject = $subject;
-            $mail->body = $html;
-        } catch (Exception $e) {
-			$return = 0;
-		}
-	//	restore_error_handler();
-
-        /*
-        if ($mail->enviar()) {
-            $return = 1;
-        } else {
-            $return = 0;
-        }
-        */
-        $return = $mail->enviar();
-        return $return;
+        case 'admin':
+            $subject = $arrArgument['inputSubject'];
+            $body = 'inputName: ' . $arr['inputName'] . '<br>' .
+                    'inputEmail: ' . $arr['inputEmail'] . '<br>' .
+                    'inputSubject: ' . $arr['inputSubject'] . '<br>' .
+                    'inputMessage: ' . $arr['inputMessage'];
+            break;
     }
+
+    
+    $html .= "<html>";
+    $html .= "<head>";
+    $html .= "<meta charset='utf-8' />
+    <style>
+            * {
+                margin: 0;
+                padding: 0;
+                text-align: center;
+              }
+
+            body {
+                margin: 0 auto;
+                width: 600px;
+                height: 300px;
+            }
+              
+            header {
+                padding: 20px;
+                background-color: blue;
+                color: white;
+                padding-left: 20px;
+                font-size: 25px;
+            }
+               
+            section {
+                padding-top: 50px;
+                padding-left: 50px;
+                margin-top: 3px;
+                margin-bottom: 3px;
+                height: 100px;
+                background-color: ghostwhite;
+              }
+              
+             footer {
+                padding: 5px;
+                padding-left: 20px;
+                background-color: blue;
+                color: white;
+              }
+        </style>";
+    $html .= "</head>";
+    $html .= "<body>";
+    $html .= "<header>";
+    $html .= "<p>" . $subject . "</p>";
+    $html .= "</header>";
+    $html .= "<section>";
+    $html .= $body;
+    $html .= "</section>";
+    $html .= "<footer>";
+    $html .= "<p>Enviado por JOINELDERLY</p>";
+    $html .= "</footer>";
+    $html .= "</body>";
+    $html .= "</html>";
+
+    $config['api_key'] = "key-eca8007a22c61d8ce7aa5d2a53e247ba"; //API Key
+    $config['api_url'] = "https://api.mailgun.net/v3/sandbox41e60784f3ba4f1f90cf3a76d9e1a483.mailgun.org/messages";
+    
+    $message = array();
+    $message['from'] = "alexgarciasanz1995@gmail.com";
+    $message['to'] = $arrArgument["inputEmail"];
+    $message['h:Reply-To'] = "alexgarciasanz1995@gmail.com";
+    $message['subject'] = "";
+    $message['html'] = $html;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $config['api_url']);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, "api:{$config['api_key']}");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_POST, true); 
+    curl_setopt($ch, CURLOPT_POSTFIELDS,$message);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
+}

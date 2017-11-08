@@ -7,7 +7,7 @@ class controller_user {
     function __construct() {
         require_once(UTILS_USER . "functions.inc.php");
         include (LIBS . 'password_compat-master/lib/password.php');
-        include (UTILS . 'upload.inc.php');
+        include (UTILS . 'upload.php');
         $_SESSION['module'] = "user";
         require_once(LIBS . 'twitteroauth/twitteroauth.php');
     }
@@ -21,22 +21,17 @@ class controller_user {
      */
     public function signup_user() {
         $jsondata = array();
-        $userJSON = $_POST;
+        //$userJSON = $_POST;
+        $userJSON = json_decode($_GET["aux"],true);
         $result = validate_userPHP($userJSON);
-        
         if ($result['resultado']) {
             $avatar = get_gravatar($result['email'], $s = 400, $d = 'identicon', $r = 'g', $img = false, $atts = array());
             $arrArgument = array(
                 'usuario' => $result['datos']['usuario'],
-                'nombre' => $result['datos']['nombre'],
-                'apellidos' => $result['datos']['apellidos'],
                 'email' => $result['datos']['email'],
                 'password' => password_hash($result['datos']['password'], PASSWORD_BCRYPT),
-                'date_birthday' => strtoupper($result['datos']['date_birthday']),
                 'tipo' => $result['datos']['tipo'],
-                'bank' => $result['datos']['bank'],
                 'avatar' => $avatar,
-                'dni' => $result['datos']['dni'],
                 'token' => ""
             );
 
@@ -110,10 +105,10 @@ class controller_user {
      * @return mixed[] returns array['success']=boolean with the result confirmation, if true returns an array['user]=array with the user information
      */
     function verify() {
-        if (substr($_GET['param'], 0, 3) == "Ver") {
+        if (substr($_GET['aux'], 0, 3) == "Ver") {
             $arrArgument = array(
                 'column' => array('token'),
-                'like' => array($_GET['param']),
+                'like' => array($_GET['aux']),
                 'field' => array('activado'),
                 'new' => array('1')
             );
@@ -127,7 +122,7 @@ class controller_user {
             if ($value) {
                 $arrArgument = array(
                     'column' => array("token"),
-                    'like' => array($_GET['param']),
+                    'like' => array($_GET['aux']),
                     'field' => array('*')
                 );
                 $user = loadModel(MODEL_USER, "user_model", "select", $arrArgument);
@@ -238,7 +233,7 @@ class controller_user {
      * @return mixed[] returns an array with the user's info, if it fails return an array['error']=boolean and array['datos']=string with the error's info.
      */
     public function login() {
-        $user = $_POST;
+        $user = json_decode($_GET["aux"],true);
         $column = array(
             'usuario'
         );
@@ -251,7 +246,7 @@ class controller_user {
             'like' => $like,
             'field' => array('password')
         );
-
+        
         set_error_handler('ErrorHandler');
         try {
             $arrValue = loadModel(MODEL_USER, "user_model", "select", $arrArgument);
@@ -274,7 +269,7 @@ class controller_user {
                     if ($arrValue[0]["total"] == 1) {
                         $arrArgument = array(
                             'column' => array("usuario"),
-                            'like' => array($user['usuario']),
+                            'like' => array($user['usuario'],$user['email']),
                             'field' => array('*')
                         );
                         $user = loadModel(MODEL_USER, "user_model", "select", $arrArgument);

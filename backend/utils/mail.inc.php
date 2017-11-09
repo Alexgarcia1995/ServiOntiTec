@@ -27,8 +27,7 @@
                     'inputMessage: ' . $arr['inputMessage'];
             break;
     }
-
-    
+  
     $html .= "<html>";
     $html .= "<head>";
     $html .= "<meta charset='utf-8' />
@@ -83,9 +82,6 @@
     $html .= "</body>";
     $html .= "</html>";
 
-    $config['api_key'] = "key-eca8007a22c61d8ce7aa5d2a53e247ba"; //API Key
-    $config['api_url'] = "https://api.mailgun.net/v3/sandbox41e60784f3ba4f1f90cf3a76d9e1a483.mailgun.org/messages";
-    
     $message = array();
     $message['from'] = "alexgarciasanz1995@gmail.com";
     $message['to'] = $arrArgument["inputEmail"];

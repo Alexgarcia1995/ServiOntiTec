@@ -145,14 +145,15 @@ class controller_user {
      */
     public function process_restore() {
         $result = array();
-        if (isset($_POST['inputEmail'])) {
-            $result = validatemail($_POST['inputEmail']);
+        $valor = json_decode($_GET["aux"],true);
+        if (isset($valor['inputEmail'])) {
+            $result = validatemail($valor['inputEmail']);
             if ($result) {
                 $column = array(
                     'email'
                 );
                 $like = array(
-                    $_POST['inputEmail']
+                    $valor['inputEmail']
                 );
                 $field = array(
                     'token'
@@ -175,7 +176,7 @@ class controller_user {
                         //////////////// Envio del correo al usuario
                         $arrArgument = array(
                             'token' => $token,
-                            'email' => $_POST['inputEmail']
+                            'email' => $valor['inputEmail']
                         );
                         if (sendtoken($arrArgument, "modificacion"))
                             echo "true|Tu mensaje ha sido enviado correctamente ";
@@ -199,11 +200,12 @@ class controller_user {
      * @return mixed[] returns array['success']=boolean with the result confirmation 
      */
     function update_pass() {
+        $valor = json_decode($_GET["aux"],true);
         $arrArgument = array(
             'column' => array('token'),
-            'like' => array($_POST['token']),
+            'like' => array($valor['token']),
             'field' => array('password'),
-            'new' => array(password_hash($_POST['password'], PASSWORD_BCRYPT))
+            'new' => array(password_hash($valor['password'], PASSWORD_BCRYPT))
         );
 
         set_error_handler('ErrorHandler');
@@ -315,10 +317,13 @@ class controller_user {
      * 
      */
     function profile_filler() {
-        if (isset($_GET['param'])) {
+        if (isset($_GET['aux'])) {
             set_error_handler('ErrorHandler');
             try {
-                $arrValue = loadModel(MODEL_USER, "user_model", "select", array(column => array('usuario'), like => array($_GET['param']), field => array('*')));
+                $arrValue = loadModel(MODEL_USER, "user_model", "select", 
+                array(column => array('usuario'), 
+                like => array($_GET['aux']), 
+                field => array('*')));
             } catch (Exception $e) {
                 $arrValue = false;
             }
@@ -326,7 +331,7 @@ class controller_user {
 
             if ($arrValue) {
                 $jsondata["success"] = true;
-                if ($_GET['param'] != '%%')
+                if ($_GET['aux'] != '%%')
                     $jsondata['user'] = $arrValue[0];
                 else
                     $jsondata['user'] = $arrValue;
@@ -352,7 +357,7 @@ class controller_user {
      * @return string retuns 'error' if fails, if success returns a json filled with the requested data
      */
     function load_pais_user() {
-        if ((isset($_GET["param"])) && ($_GET["param"] == true)) {
+        if ((isset($_GET["aux"])) && ($_GET["aux"] == true)) {
             $json = array();
 
             $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
@@ -378,12 +383,12 @@ class controller_user {
     /**
      * Gets all spanish 'provincias'
      * 
-     * @param boolean $_GET['param'] just for confirmation porposes
+     * @param boolean $_GET['aux'] just for confirmation porposes
      * 
      * @return mixed[] returns array['provincias'], if fails it contains 'error', if succed returns a json with the data
      */
     function load_provincias_user() {
-        if ((isset($_GET["param"])) && ($_GET["param"] == true)) {
+        if ((isset($_GET["aux"])) && ($_GET["aux"] == true)) {
             $jsondata = array();
             $json = array();
 
@@ -415,13 +420,12 @@ class controller_user {
      * @return mixed[] retuns the @param if fails, if succed retuns the json filled
      */
     function load_poblaciones_user() {
-        if (isset($_POST['idPoblac'])) {
             $jsondata = array();
             $json = array();
-
+            $poblacion = json_decode($_GET['aux'],true);
             set_error_handler('ErrorHandler');
             try {
-                $json = loadModel(MODEL_USER, "user_model", "obtain_poblaciones", $_POST['idPoblac']);
+                $json = loadModel(MODEL_USER, "user_model", "obtain_poblaciones", $poblacion['idPoblac']);
             } catch (Exception $e) {
                 $json = false;
             }
@@ -432,11 +436,10 @@ class controller_user {
                 echo json_encode($jsondata);
                 exit;
             } else {
-                $jsondata["poblaciones"] = $_POST['idPoblac'];
+                $jsondata["poblaciones"] = $poblacion['idPoblac'];
                 echo json_encode($jsondata);
                 exit;
             }
-        }
     }
     
     /**
@@ -474,6 +477,8 @@ class controller_user {
      */
     function modify() {
         $jsondata = array();
+        // $userJSON = json_decode($_GET['aux'],true);
+        // $userJSON['password2'] = $userJSON['password'];
         $userJSON = $_POST;
         $userJSON['password2'] = $userJSON['password'];
         $result = validate_userPHP($userJSON);
@@ -484,9 +489,7 @@ class controller_user {
                 'apellidos' => $result['datos']['apellidos'],
                 'email' => $result['datos']['email'],
                 'password' => password_hash($result['datos']['password'], PASSWORD_BCRYPT),
-                'date_birthday' => strtoupper($result['datos']['date_birthday']),
                 'tipo' => $result['datos']['tipo'],
-                'bank' => $result['datos']['bank'],
                 'avatar' => $_SESSION['avatar']['datos'],
                 'dni' => $result['datos']['dni'],
                 'pais' => $result['datos']['pais'],
@@ -554,55 +557,60 @@ class controller_user {
      */
     function social_signin() {
         $user = $_POST;
-        if ($user['twitter']) {
-            $user['apellidos'] = "";
-            $user['email'] = "";
-            // $mail = $user['user_id'] . "@gmail.com";
-        }
-        set_error_handler('ErrorHandler');
-        try {
-            $arrValue = loadModel(MODEL_USER, "user_model", "count", array('column' => array('usuario'), 'like' => array($user['id'])));
-        } catch (Exception $e) {
-            $arrValue = false;
-        }
-        restore_error_handler();
-
-        if (!$arrValue[0]["total"]) {
-            if (!$user['avatar'])
-                $user['avatar'] = 'http://graph.facebook.com/' . ($user['id']) . '/picture';
-
-            $arrArgument = array(
-                'usuario' => $user['id'],
-                'nombre' => $user['nombre'],
-                'apellidos' => $user['apellidos'],
-                'email' => $user['email'],
-                'tipo' => 'client',
-                'avatar' => $user['avatar'],
-                'activado' => "1"
-            );
-
-            set_error_handler('ErrorHandler');
-            try {
-                $value = loadModel(MODEL_USER, "user_model", "create_user", $arrArgument);
-            } catch (Exception $e) {
-                $value = false;
-            }
-            restore_error_handler();
-        } else
-            $value = true;
-
-        if ($value) {
-            set_error_handler('ErrorHandler');
-            $arrArgument = array(
-                'column' => array("usuario"),
-                'like' => array($user['id']),
-                'field' => array('*')
-            );
-            $user = loadModel(MODEL_USER, "user_model", "select", $arrArgument);
-            restore_error_handler();
-            echo json_encode($user);
-        } else {
-            echo json_encode(array('error' => true, 'datos' => 503));
-        }
-    }
+       // echo json_encode($user);
+        //die();
+    //   $userJSON = json_decode($_GET,true);
+         if ($user['twitter']) {
+             $user['nombre'] = "";
+             $user['email'] = "";
+             $mail = $user['user_id'] . "@gmail.com";
+             $user['id']=(String)$user['id'];
+         //    echo json_encode($user);
+           //  die();
+         }
+         //set_error_handler('ErrorHandler');
+         try {
+             $arrValue = loadModel(MODEL_USER, "user_model", "count", array('column' => array('usuario'), 'like' => array($user['id'])));
+         } catch (Exception $e) {
+             $arrValue = false;
+         }
+         restore_error_handler();
+         if (!$arrValue[0]["total"]) {
+             if (!$user['avatar'])
+                 $user['avatar'] = 'http://graph.facebook.com/' . ($user['id']) . '/picture';
+ 
+             $arrArgument = array(
+                 'usuario' => $user['id'],
+                 'nombre' => $user['nombre'],
+                 // 'apellidos' => $user['apellidos'],
+                 // 'email' => $user['email'],
+                 'tipo' => 'client',
+                 'avatar' => $user['avatar'],
+                 'activado' => "1"
+             );
+ 
+             set_error_handler('ErrorHandler');
+             try {
+                 $value = loadModel(MODEL_USER, "user_model", "create_user", $arrArgument);
+             } catch (Exception $e) {
+                 $value = false;
+             }
+             restore_error_handler();
+         } else
+             $value = true;
+ 
+         if ($value) {
+             set_error_handler('ErrorHandler');
+             $arrArgument = array(
+                 'column' => array("usuario"),
+                 'like' => array($user['id']),
+                 'field' => array('*')
+             );
+             $user = loadModel(MODEL_USER, "user_model", "select", $arrArgument);
+             restore_error_handler();
+             echo json_encode($user);
+         } else {
+             echo json_encode(array('error' => true, 'datos' => 503));
+         }
+     }
 }

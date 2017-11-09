@@ -56,6 +56,17 @@ app.config(['$routeProvider', function ($routeProvider) {
         }
     }
 })
+
+  //Restore
+  .when("/user/recuperar", {
+    templateUrl: "frontend/modules/user/view/restore.view.html",
+    controller: "restoreCtrl"
+  })
+  //ChangePass
+  .when("/user/cambiarpass/:token", {
+    templateUrl: "frontend/modules/user/view/changepass.view.html",
+    controller: "changepassCtrl"
+  })
     // else 404
     //.otherwise("/404", {templateUrl: "view/404.html", controller: "PageCtrl"});
 }]);

@@ -5,14 +5,14 @@ function validate_userPHP($value) {
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^[A-Za-z]{3,30}$/')
         ),
-        /*'nombre' => array(
+        'nombre' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^\D{3,30}$/')
         ),
         'apellidos' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             'options' => array('regexp' => '/^\D{4,120}$/')
-        ),*/
+        ),
         'email' => array(
             'filter' => FILTER_CALLBACK,
             'options' => 'validatemail'
@@ -47,14 +47,14 @@ function validateUsers($resultado) {
         $result['usuario'] = 'Usuario debe tener de 4 a 20 caracteres';
         $result['resultado'] = false;
         
-    /*} elseif (!$resultado['nombre']) {
+    } elseif (!$resultado['nombre']) {
         $result['nombre'] = 'Nombre debe tener de 3 a 30 letras';
         $result['resultado'] = false;
       
     } elseif (!$resultado['apellidos']) {
         $result['apellidos'] = 'Apellidos debe tener de 4 a 120 letras';
         $result['resultado'] = false;
-       */
+        
     } elseif (!$resultado['email']) {
         $result['email'] = 'El email debe contener de 5 a 50 caracteres y debe ser un email valido';
         $result['resultado'] = false;

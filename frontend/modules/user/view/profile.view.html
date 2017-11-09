@@ -24,16 +24,7 @@
                     <span class="text-danger" ng-show="AlertMessage" ng-model="user.surn_error">{{user.surn_error}}</span>
                 </p>
             </div>
-            <div class="control-group">
-                <label class="pefil">Fecha de Nacimiento:</label>
-                <p>
-                    <input type="text" calendar required id="inputBirth" ng-model="user.date_birthday" name="inputBirth" 
-                    ng-pattern="/(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}/" class="form-control" dir="auto" maxlength="100" ng-change="change_profile()">
-                    <span class='error' ng-show="!profile_form.inputBirth.$valid && profile_form.inputBirth.$error.required && (profile_form.inputBirth.$dirty || profile_form.inputBirth.$touched)" >Fecha de nacimiento no válida</span>
-                    <span class="text-danger" ng-show="profile_form.inputBirth.$error.pattern">FNac no válida</span><br />
-                    <span class="text-danger" ng-show="AlertMessage" ng-model="user.birth_error">{{user.birth_error}}</span>
-                </p>
-            </div>
+            
             <div class="control-group">
                 <label class="pefil">Contraseña:</label>
                 <p>
@@ -45,20 +36,9 @@
                 </p>
             </div>
 
-            <div class="control-group">
-                <label class="pefil">Nº cuenta bancaria:</label>
-                <p>
-                    <input required type="text" id="inputBank" ng-model="user.bank" name="inputBank" ng-pattern="/^.{4,20}$/"
-                    class="form-control" dir="auto" maxlength="100" ng-change="change_profile()">
-                    <span class="text-danger" ng-show="profile_form.inputBank.$error.required && (profile_form.inputBank.$dirty || profile_form.inputBank.$touched)">El campo es obligatorio</span>
-                    <span class="text-danger" ng-show="profile_form.inputBank.$error.pattern">Bank no válido</span><br />
-                    <span class="text-danger" ng-show="AlertMessage" ng-model="user.bank_error">{{user.bank_error}}</span>
-                </p>
-            </div>
-
         </div>
         <!--- Centro -->
-        <div class="center">
+        <div class="center" >
             <br>
             <h1 class="form-profile-heading" id="username">{{user.usuario}}</h1>
             <img id="avatar_user" src="{{user.avatar}}" />
@@ -70,7 +50,7 @@
             <br/>
             <p>
                 <input class="submit_user" type="button" ng-click="submit()" name="submit" id="submitBtn_user" value="Guardar" 
-                ng-show="profile_form.inputName.$valid && profile_form.inputSurn.$valid && profile_form.inputPass.$valid && profile_form.inputBirth.$valid && profile_form.inputBank.$valid"/>
+                ng-show="profile_form.inputName.$valid && profile_form.inputSurn.$valid && profile_form.inputPass.$valid"/>
             </p>
         </div>
         <!--- Lateral Derecho -->

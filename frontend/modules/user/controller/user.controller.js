@@ -42,7 +42,7 @@ app.controller('modalWindowCtrl', function ($scope, $uibModalInstance, services,
         data = JSON.stringify(data);
         services.get("user", "login", data).then(function (response) {
             //console.log(response);
-            console.log(response[0]);
+            //console.log(response[0]);
             if (!response.error) {
                 cookiesService.SetCredentials(response[0]);
                 $scope.close();
@@ -226,7 +226,7 @@ app.controller('restoreCtrl', function ($scope, services, $timeout, $location, C
         var data = {"inputEmail": $scope.restore.inputEmail, "token": 'restore_form'};
         var restore_form = JSON.stringify(data);
         
-        services.post('user', 'process_restore', restore_form).then(function (response) {
+        services.get('user', 'process_restore', restore_form).then(function (response) {
             //console.log(response);
             response = response.split("|");
             $scope.message = response[1];
@@ -257,8 +257,8 @@ app.controller('changepassCtrl', function ($route, $scope, services, $location, 
         var data = {"password": $scope.changepass.inputPassword, "token": $scope.token};
         var passw = JSON.stringify(data);
         
-        services.put('user', 'update_pass', passw).then(function (response) {
-            //console.log(response);
+        services.get('user', 'update_pass', passw).then(function (response) {
+            console.log(response);
             if (response.success) {
                 $location.path('/');
                 CommonService.banner("Tu contraseña se ha cambiado correctamente", "");
@@ -271,7 +271,7 @@ app.controller('changepassCtrl', function ($route, $scope, services, $location, 
 
 app.controller('profileCtrl', function ($scope, UserService, services, user, $location, CommonService, 
 load_pais_prov_poblac, $timeout, cookiesService) {
-    console.log(user);
+    //console.log(user);
     //console.log(user.user.usuario); //yomogan
     //admin
     $scope.admin = false;
@@ -286,7 +286,8 @@ load_pais_prov_poblac, $timeout, cookiesService) {
     // }
                 
     //llenar los campos del form_profile con scope
-    //user.user.password = "";
+    user.user.password = "";
+    //$scope.password="";
     $scope.user = user.user;
     $scope.email= user.email;
     $scope.drop = {
@@ -366,7 +367,8 @@ load_pais_prov_poblac, $timeout, cookiesService) {
     };
     
     $scope.resetValues = function () {
-        var datos = {idPoblac: $scope.user.provincia.id};
+        var data = {"idPoblac": $scope.user.provincia.id};
+        var datos = JSON.stringify(data)
         load_pais_prov_poblac.loadPoblacion(datos)
         .then(function (response) {
             if(response.success){
@@ -456,12 +458,10 @@ load_pais_prov_poblac, $timeout, cookiesService) {
         
         //var data = JSON.stringify($scope.user);
         var data = {"usuario": $scope.user.usuario, "email": $scope.user.email, "nombre": $scope.user.nombre, 
-        "apellidos": $scope.user.apellidos, "dni": $scope.user.dni, "password": $scope.user.password, 
-        "date_birthday": $scope.user.date_birthday, "bank": $scope.user.bank, "pais": pais,
-        "provincia": prov,"poblacion": pob, "avatar": $scope.user.avatar, "tipo": tipo};
-        var data1 = JSON.stringify(data);
-        //console.log(data);
-        
+        "apellidos": $scope.user.apellidos ,"avatar":$scope.user.avatar, "dni": $scope.user.dni, "password": $scope.user.password,"pais": pais,
+        "provincia": prov,"poblacion": pob, "tipo": tipo };
+        //var data1 = JSON.stringify(data);"avatar": $scope.user.avatar
+        //console.log(data1);
         /*
         "usuario":"yomogan","email":"yomogan@gmail.com","nombre":"yomogan","apellidos":"yomogan","dni":"48287734Q","password":"",
         "date_birthday":"03/04/1977","bank":"1234567890","pais":{"sISOCode":"ES","sName":"Spain","$$hashKey":"object:264"},
@@ -474,8 +474,8 @@ load_pais_prov_poblac, $timeout, cookiesService) {
         "avatar":"https://php-mvc-oo-yomogan.c9users.io/4_AngularJS/3_proj_final_AngularJS/JoinElderly/backend/media/flowers.png","tipo":"admin"
         */
 
-        services.put("user", "modify", data1).then(function (response) {
-            //console.log(response);
+        services.put("user", "modify", JSON.stringify(data)).then(function (response) {
+            console.log(response);
             //console.log(response.user[0].usuario);
             
             //limpiar el avatar de :80

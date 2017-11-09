@@ -42,7 +42,7 @@ function (services, $q) {
     
     function loadPoblacion(datos) {
         var deferred = $q.defer();
-        services.post("user", "load_poblaciones_user", datos).then(function (data) {
+        services.get("user", "load_poblaciones_user", datos).then(function (data) {
             //console.log(data);
             if (data === 'error') {
                 deferred.resolve({ success: false, datas: "error_load_poblaciones" });

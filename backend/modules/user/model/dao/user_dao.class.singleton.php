@@ -14,6 +14,8 @@ class user_dao {
 
     public function create_user_DAO($db, $arrArgument) {
         $usuario = $arrArgument['usuario'];
+        $nombre = $arrArgument['nombre'];
+        $apellidos = $arrArgument['apellidos'];
         $email = $arrArgument['email'];
         $password = $arrArgument['password'];
         $tipo = $arrArgument['tipo'];
@@ -28,9 +30,9 @@ class user_dao {
         else
             $activado = 0;
 
-        $sql = "INSERT INTO usuarios (usuario, email,"
+        $sql = "INSERT INTO usuarios (usuario, email,nombre,apellidos,"
                 . " password, tipo, pais, provincia, poblacion, avatar, valoracion, activado, token"
-                . " ) VALUES ('$usuario', '$email',"
+                . " ) VALUES ('$usuario', '$email','$nombre','$apellidos',"
                 . " '$password', '$tipo','$pais','$provincia','$poblacion', '$avatar', '$valoracion', '$activado','$token')";
         return $db->ejecutar($sql);
     }

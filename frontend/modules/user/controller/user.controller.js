@@ -70,10 +70,9 @@ app.controller('modalWindowCtrl', function ($scope, $uibModalInstance, services,
             //console.log(twitterService.isReady());
             if (twitterService.isReady()) {
                 twitterService.getUserInfo().then(function (data) {
-                    //console.log(data);
-                    services.post("user", 'social_signin', {id: data.id, nombre: data.name, avatar: data.profile_image_url_https, twitter: true})
+                    services.post("user", 'social_signin', {id: data.id, nombre: data.name, avatar: data.profile_image_url_https,email: data.email, twitter: true})
                     .then(function (response) {
-                        //console.log(response[0]);
+                        //console.log(response);
                         if (!response.error) {
                             cookiesService.SetCredentials(response[0]);
                             $scope.close();
@@ -96,7 +95,7 @@ app.controller('modalWindowCtrl', function ($scope, $uibModalInstance, services,
                 }else{
                     services.post("user", 'social_signin', {id: user.id, nombre: user.first_name, apellidos: user.last_name, email: user.email})
                     .then(function (response) {
-                        //console.log(response);
+                        console.log(response);
                         //console.log(response[0]['usuario']);
                         if (!response.error) {
                             cookiesService.SetCredentials(response[0]);
@@ -398,7 +397,7 @@ load_pais_prov_poblac, $timeout, cookiesService) {
             'success': function (file, response) {
                 //console.log(response);
                 response = JSON.parse(response);
-                //console.log(response);
+                response.datos="backend/"+response.datos;
                 if (response.resultado) {
                     $(".msg").addClass('msg_ok').removeClass('msg_error').text('Success Upload image!!');
                     $('.msg').animate({'right': '300px'}, 300);
@@ -406,7 +405,7 @@ load_pais_prov_poblac, $timeout, cookiesService) {
                     //console.log(response.datos);
                     $scope.user.avatar = response.datos;
                 
-                    var user = {usuario: $scope.user.usuario, avatar: response.datos, 
+                    var user = {usuario: $scope.user.usuario, avatar: "backend/"+response.datos, 
                     tipo: $scope.user.tipo, nombre: $scope.user.nombre};
                     cookiesService.SetCredentials(user);
                     
@@ -460,8 +459,7 @@ load_pais_prov_poblac, $timeout, cookiesService) {
         var data = {"usuario": $scope.user.usuario, "email": $scope.user.email, "nombre": $scope.user.nombre, 
         "apellidos": $scope.user.apellidos ,"avatar":$scope.user.avatar, "dni": $scope.user.dni, "password": $scope.user.password,"pais": pais,
         "provincia": prov,"poblacion": pob, "tipo": tipo };
-        //var data1 = JSON.stringify(data);"avatar": $scope.user.avatar
-        //console.log(data1);
+        var data1 = JSON.stringify(data);
         /*
         "usuario":"yomogan","email":"yomogan@gmail.com","nombre":"yomogan","apellidos":"yomogan","dni":"48287734Q","password":"",
         "date_birthday":"03/04/1977","bank":"1234567890","pais":{"sISOCode":"ES","sName":"Spain","$$hashKey":"object:264"},
@@ -474,7 +472,7 @@ load_pais_prov_poblac, $timeout, cookiesService) {
         "avatar":"https://php-mvc-oo-yomogan.c9users.io/4_AngularJS/3_proj_final_AngularJS/JoinElderly/backend/media/flowers.png","tipo":"admin"
         */
 
-        services.put("user", "modify", JSON.stringify(data)).then(function (response) {
+        services.put("user", "modify",data1).then(function (response) {
             console.log(response);
             //console.log(response.user[0].usuario);
             

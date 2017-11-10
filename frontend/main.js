@@ -98,3 +98,10 @@ app.controller('PageCtrl', function (/* $scope, $location, $http */) {
     selector: "a[data-toggle=tooltip]"
   })
 });
+app.config([
+  'FacebookProvider',
+  function (FacebookProvider) {
+      var myAppId = '354968214973716';
+      FacebookProvider.init(myAppId);
+  }
+]);

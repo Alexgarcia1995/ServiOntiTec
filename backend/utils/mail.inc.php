@@ -81,7 +81,8 @@
     $html .= "</footer>";
     $html .= "</body>";
     $html .= "</html>";
-
+    
+    
     $message = array();
     $message['from'] = "alexgarciasanz1995@gmail.com";
     $message['to'] = $arrArgument["inputEmail"];

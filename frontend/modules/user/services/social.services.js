@@ -36,7 +36,7 @@ app.factory('twitterService', function ($q) {
         },
         getUserInfo: function () {
             var deferred = $q.defer();
-            var promise = authorizationResult.get('1.1/account/verify_credentials.json').done(function (data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
+            var promise = authorizationResult.get('1.1/account/verify_credentials.json?include_email=true').done(function (data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
                 deferred.resolve(data);
             });
             return deferred.promise;
@@ -53,6 +53,7 @@ app.factory('facebookService', function (Facebook, $q) {
 
     function login() {
         var deferred = $q.defer();
+        var loginOptions = { scope: 'email' };
         Facebook.getLoginStatus(function (response) {
             var promise;
             if (response.status == 'connected')
@@ -60,7 +61,7 @@ app.factory('facebookService', function (Facebook, $q) {
             else {
                 promise = Facebook.login(function (response) {
                     deferred.resolve(true);
-                });
+                },loginOptions);
             }
         });
         return deferred.promise;
@@ -68,7 +69,7 @@ app.factory('facebookService', function (Facebook, $q) {
 
     function me() {
         var deferred = $q.defer();
-        var promise = Facebook.api('/me', {fields: 'email, id, first_name, last_name'}, function (response) {
+        var promise = Facebook.api('/me', {fields: 'first_name,last_name,email,id'}, function (response) {
             deferred.resolve(response);
         });
         return deferred.promise;

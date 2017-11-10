@@ -490,7 +490,7 @@ class controller_user {
                 'email' => $result['datos']['email'],
                 'password' => password_hash($result['datos']['password'], PASSWORD_BCRYPT),
                 'tipo' => $result['datos']['tipo'],
-                'avatar' => $_SESSION['avatar']['datos'],
+                'avatar' => "backend/".$_SESSION['avatar']['datos'],
                 'dni' => $result['datos']['dni'],
                 'pais' => $result['datos']['pais'],
                 'provincia' => $result['datos']['provincia'],
@@ -557,16 +557,15 @@ class controller_user {
      */
     function social_signin() {
         $user = $_POST;
-       // echo json_encode($user);
-        //die();
-    //   $userJSON = json_decode($_GET,true);
+        // echo json_encode($user);
+        // die();
          if ($user['twitter']) {
-             $user['nombre'] = "";
-             $user['email'] = "";
+             //$user['nombre'] = "";
+             //$user['email'] = "";
              $mail = $user['user_id'] . "@gmail.com";
              $user['id']=(String)$user['id'];
-         //    echo json_encode($user);
-           //  die();
+            //echo json_encode($user);
+            //  die();
          }
          //set_error_handler('ErrorHandler');
          try {
@@ -578,17 +577,15 @@ class controller_user {
          if (!$arrValue[0]["total"]) {
              if (!$user['avatar'])
                  $user['avatar'] = 'http://graph.facebook.com/' . ($user['id']) . '/picture';
- 
              $arrArgument = array(
                  'usuario' => $user['id'],
                  'nombre' => $user['nombre'],
-                 // 'apellidos' => $user['apellidos'],
-                 // 'email' => $user['email'],
+                 'apellidos' => $user['apellidos'],
+                 'email' => $user['email'],
                  'tipo' => 'client',
                  'avatar' => $user['avatar'],
                  'activado' => "1"
              );
- 
              set_error_handler('ErrorHandler');
              try {
                  $value = loadModel(MODEL_USER, "user_model", "create_user", $arrArgument);
